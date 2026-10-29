@@ -14,4 +14,5 @@ scripts:
       cd build/ios
       zip -r Runner.ipa Payload
 artifacts:
-  - build/ios/Runner.ipa
+  - build/ios/**/*.ipa
+  - build/**/*.ipa
