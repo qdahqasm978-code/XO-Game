@@ -5,10 +5,15 @@ workflows:
     environment:
       flutter: stable
       xcode: latest
-    scripts:
-      - name: Get dependencies
-        script: flutter pub get
-      - name: Build iOS IPA
-        script: flutter build ipa --release --no-codesign
+scripts:
+  - name: Build iOS App
+    script: |
+      flutter build ipa --release --no-codesign
+      # أمر لضغط وتوليد ملف ipa يدوياً من مخرجات الأرشيف
+      cd build/ios/archive/Runner.xcarchive/Products/Applications/
+      mkdir Payload
+      mv Runner.app Payload/
+      zip -r ../../../ipa-output.zip Payload
+      mv ../../../ipa-output.zip ../../../Runner.ipa
     artifacts:
-      - build/ios/ipa/*.ipa
+      - build/ios/Runner.ipa
