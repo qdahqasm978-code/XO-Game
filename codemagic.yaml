@@ -9,11 +9,9 @@ scripts:
   - name: Build iOS App
     script: |
       flutter build ipa --release --no-codesign
-      # أمر لضغط وتوليد ملف ipa يدوياً من مخرجات الأرشيف
-      cd build/ios/archive/Runner.xcarchive/Products/Applications/
-      mkdir Payload
-      mv Runner.app Payload/
-      zip -r ../../../ipa-output.zip Payload
-      mv ../../../ipa-output.zip ../../../Runner.ipa
-    artifacts:
-      - build/ios/Runner.ipa
+      mkdir -p build/ios/Payload
+      cp -r build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app build/ios/Payload/
+      cd build/ios
+      zip -r Runner.ipa Payload
+artifacts:
+  - build/ios/Runner.ipa
